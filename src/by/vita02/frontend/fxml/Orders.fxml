@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.vita02.frontend.controllers.OrdersController">
+   <children>
+      <ImageView fitHeight="450.0" fitWidth="800.0">
+         <image>
+            <Image url="@../images/material_back.jpg" />
+         </image>
+      </ImageView>
+      <ToolBar prefHeight="40.0" prefWidth="800.0">
+         <items>
+            <Button fx:id="AccountButton" mnemonicParsing="false" style="-fx-background-color: blue;" text="Аккаунт" textFill="WHITE" />
+            <Button fx:id="NewOrderButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="666.0" style="-fx-background-color: white;" text="Сделать новый заказ" textAlignment="CENTER" textFill="BLUE" underline="true" />
+            <Button fx:id="ExitButton" alignment="CENTER_RIGHT" mnemonicParsing="false" style="-fx-background-color: blue;" text="Выйти" textFill="WHITE" />
+         </items>
+      </ToolBar>
+      <TableView fx:id="OrdersTable" layoutX="67.0" layoutY="54.0" prefHeight="381.0" prefWidth="666.0">
+        <columns>
+          <TableColumn fx:id="ProjectTypeColumn" prefWidth="203.19995880126953" text="Вид проекта" />
+          <TableColumn fx:id="CostColumn" prefWidth="67.20001220703125" text="Стоимость" />
+            <TableColumn fx:id="NumberOfConventionalUnitsColumn" prefWidth="93.60003662109375" text="Кол-во усл. ед." />
+            <TableColumn fx:id="DateColumn" maxWidth="200.00003051757812" prefWidth="200.00003051757812" text="Дата" />
+            <TableColumn fx:id="StatusColumn" prefWidth="96.7999267578125" text="Статус" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

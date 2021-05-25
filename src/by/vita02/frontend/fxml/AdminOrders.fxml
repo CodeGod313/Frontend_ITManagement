@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.vita02.frontend.controllers.AdminOrdersController">
+   <children>
+      <ImageView fitHeight="450.0" fitWidth="800.0">
+         <image>
+            <Image url="@../images/admin_back.png" />
+         </image>
+      </ImageView>
+      <ToolBar layoutY="410.0" prefHeight="40.0" prefWidth="800.0" style="-fx-background-color: white;">
+        <items>
+          <Button mnemonicParsing="false" style="-fx-background-color: blue;" text="Диаграмма востребованности" textFill="WHITE" />
+            <Button mnemonicParsing="false" style="-fx-background-color: blue;" text="Отчёт по заказам" textFill="WHITE" />
+            <Button mnemonicParsing="false" style="-fx-background-color: blue;" text="Отчёт по прибыли" textFill="WHITE" />
+            <Button mnemonicParsing="false" style="-fx-background-color: blue;" text="График прибыли" textFill="WHITE" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="28.0" strokeType="INSIDE" width="191.0" />
+            <Button mnemonicParsing="false" style="-fx-background-color: blue;" text="Выход" textFill="WHITE" />
+        </items>
+      </ToolBar>
+      <TableView fx:id="OrdersTable" layoutX="25.0" layoutY="14.0" prefHeight="378.0" prefWidth="749.0">
+        <columns>
+          <TableColumn fx:id="ProjectTypeColumn" prefWidth="196.79998779296875" text="Тип проекта" />
+          <TableColumn fx:id="ProfitColumn" prefWidth="172.0" text="Прибыль" />
+            <TableColumn fx:id="StatusColumn" prefWidth="123.199951171875" text="Cтатус" />
+            <TableColumn fx:id="CompanyNameColumn" prefWidth="256.800048828125" text="Компания-заказчик" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
