@@ -47,20 +47,30 @@ public class SignInController {
           } else passwordValidationField.setText("");
           if (!status) return;
           SignInService signInService = new SignInService();
-          if (!signInService.signIn(nickName, password)) {
+          String ans = signInService.signIn(nickName, password);
+          if (ans.equals("refuse")) {
             BadCredTextLabel.setText("Проверьте введённые данные");
             return;
           }
-          Parent root;
-          try {
-            root = FXMLLoader.load(getClass().getResource("../fxml/Account.fxml"));
+          if (ans.equals("Admin")) {
+            try {
+              Parent root = FXMLLoader.load(getClass().getResource("../fxml/AdminOrders.fxml"));
+              StageConfig.stage.setScene(new Scene(root, 800, 450));
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+          } else {
+            Parent root;
+            try {
+              root = FXMLLoader.load(getClass().getResource("../fxml/Account.fxml"));
 
-            StageConfig.stage.setTitle("ITManagement");
-            StageConfig.stage.setScene(new Scene(root, 800, 450));
-            StageConfig.stage.setResizable(false);
-            StageConfig.stage.show();
-          } catch (IOException e) {
-            e.printStackTrace();
+              StageConfig.stage.setTitle("ITManagement");
+              StageConfig.stage.setScene(new Scene(root, 800, 450));
+              StageConfig.stage.setResizable(false);
+              StageConfig.stage.show();
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
           }
         });
 

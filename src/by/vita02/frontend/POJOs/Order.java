@@ -1,6 +1,16 @@
 package by.vita02.frontend.POJOs;
 
 public class Order {
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     private String projectType;
     private String date;
     private String status;

@@ -7,8 +7,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
-
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.vita02.frontend.controllers.AdminOrdersController">
    <children>
@@ -19,12 +18,13 @@
       </ImageView>
       <ToolBar layoutY="410.0" prefHeight="40.0" prefWidth="800.0" style="-fx-background-color: white;">
         <items>
-          <Button mnemonicParsing="false" style="-fx-background-color: blue;" text="Диаграмма востребованности" textFill="WHITE" />
-            <Button mnemonicParsing="false" style="-fx-background-color: blue;" text="Отчёт по заказам" textFill="WHITE" />
-            <Button mnemonicParsing="false" style="-fx-background-color: blue;" text="Отчёт по прибыли" textFill="WHITE" />
-            <Button mnemonicParsing="false" style="-fx-background-color: blue;" text="График прибыли" textFill="WHITE" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="28.0" strokeType="INSIDE" width="191.0" />
-            <Button mnemonicParsing="false" style="-fx-background-color: blue;" text="Выход" textFill="WHITE" />
+          <Button fx:id="DemandChartButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="187.0" style="-fx-background-color: blue;" text="Диаграмма востребованности" textFill="WHITE" />
+            <Button fx:id="ReportButton" mnemonicParsing="false" style="-fx-background-color: blue;" text="Отчёты" textFill="WHITE" />
+            <Button fx:id="GraphicOfProfitButton" mnemonicParsing="false" style="-fx-background-color: blue;" text="График прибыли" textFill="WHITE" />
+            <Button fx:id="ClientsButton" mnemonicParsing="false" style="-fx-background-color: blue;" text="Клиенты" textFill="WHITE" />
+            <Button fx:id="AcceptButton" mnemonicParsing="false" style="-fx-background-color: green;" text="Одобрить" textFill="WHITE" />
+            <Text fx:id="AcceptValidationField" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="218.13661651611255" />
+            <Button fx:id="ExitButton" mnemonicParsing="false" style="-fx-background-color: blue;" text="Выход" textFill="WHITE" />
         </items>
       </ToolBar>
       <TableView fx:id="OrdersTable" layoutX="25.0" layoutY="14.0" prefHeight="378.0" prefWidth="749.0">

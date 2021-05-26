@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
 import com.sun.source.tree.Scope;
 
 public class SignInService {
-  public boolean signIn(String nickName, String password) {
+  public String signIn(String nickName, String password) {
     try {
       Gson gson = new Gson();
       QueryDTO queryDTO = new QueryDTO((long) -1, "signIn");
@@ -17,13 +17,15 @@ public class SignInService {
       SocketService.writeLine(password);
       String answer = SocketService.getBufferedReader().readLine();
       if (answer.equals("refuse")) {
-        return false;
+        return "refuse";
       }
+      if(answer.equals("AsAdmin"))
+        return "Admin";
       JsonObject jsonObject = gson.fromJson(answer, JsonObject.class);
       LastQueryService.setUserId(jsonObject.get("id").getAsLong());
     } catch (Exception e) {
       System.out.println("Error: server disconnected");
     }
-    return true;
+    return "Approved";
   }
 }
