@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.vita02.frontend.controllers.ClientsController">
+   <children>
+      <ImageView fitHeight="450.0" fitWidth="800.0">
+         <image>
+            <Image url="@../images/admin_back.png" />
+         </image>
+      </ImageView>
+      <ToolBar layoutY="410.0" prefHeight="40.0" prefWidth="800.0" style="-fx-background-color: white;">
+         <items>
+            <Button fx:id="DemandChartButton" mnemonicParsing="false" style="-fx-background-color: blue;" text="Диаграмма востребованности" textFill="WHITE" />
+            <Button fx:id="ReportButton" mnemonicParsing="false" style="-fx-background-color: blue;" text="Отчёты" textFill="WHITE" />
+            <Button fx:id="GraphicOfProfitButton" mnemonicParsing="false" style="-fx-background-color: blue;" text="График прибыли" textFill="WHITE" />
+            <Button fx:id="OrderButton" mnemonicParsing="false" style="-fx-background-color: blue;" text="Заказы" textFill="WHITE" />
+            <Button fx:id="DeleteButton" mnemonicParsing="false" style="-fx-background-color: red;" text="Удалить" textFill="WHITE" />
+            <Text fx:id="AcceptValidationField" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="246.13660430908203" />
+            <Button fx:id="ExitButton" mnemonicParsing="false" style="-fx-background-color: blue;" text="Выход" textFill="WHITE" />
+         </items>
+      </ToolBar>
+      <TableView fx:id="ClientsTable" layoutX="25.0" layoutY="52.0" prefHeight="341.0" prefWidth="750.0">
+         <columns>
+            <TableColumn fx:id="IdColumn" prefWidth="36.79998779296875" text="ID" />
+            <TableColumn fx:id="NickNameColumn" prefWidth="95.19998168945312" text="Никнейм" />
+            <TableColumn fx:id="NameColumn" prefWidth="126.4000244140625" text="Имя" />
+            <TableColumn fx:id="SurnameColumn" maxWidth="169.60003662109375" prefWidth="148.800048828125" text="Фамилия" />
+            <TableColumn fx:id="EmailColumn" prefWidth="192.0" text="Email" />
+            <TableColumn fx:id="PassportNumberColumn" prefWidth="145.60009765625" text="Номер паспорта" />
+         </columns>
+      </TableView>
+      <Text layoutX="25.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Найти:" wrappingWidth="109.59999999999991">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <TextField fx:id="SurnameTextField" layoutX="124.0" layoutY="19.0" promptText="Фамилия" style="-fx-background-color: white;" />
+      <Text layoutX="124.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Фамилия" />
+      <TextField fx:id="CompanyTextField" layoutX="325.0" layoutY="19.0" promptText="Компания" style="-fx-background-color: white;" />
+      <Text layoutX="325.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Компания" />
+      <Button fx:id="FindButton" layoutX="496.0" layoutY="19.0" mnemonicParsing="false" style="-fx-background-color: yellow;" text="Найти" />
+      <Button fx:id="ResetButton" layoutX="580.0" layoutY="19.0" mnemonicParsing="false" style="-fx-background-color: white;" text="Сброс" />
+   </children>
+</AnchorPane>
