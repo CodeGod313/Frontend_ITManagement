@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.vita02.frontend.controllers.TopUpController">
+   <children>
+      <ImageView fitHeight="450.0" fitWidth="800.0">
+         <image>
+            <Image url="@../images/material_back_2.jpg" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="357.0" layoutX="36.0" layoutY="79.0" opacity="0.67" strokeType="INSIDE" width="728.0" />
+      <ImageView fitHeight="327.0" fitWidth="424.0" layoutX="227.0" layoutY="79.0" opacity="0.15" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/topUp.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="topUpButton" layoutX="297.0" layoutY="306.0" mnemonicParsing="false" style="-fx-background-color: green;" text="Пополнить" textFill="WHITE">
+         <font>
+            <Font size="32.0" />
+         </font></Button>
+      <Button fx:id="cancelButton" layoutX="58.0" layoutY="395.0" mnemonicParsing="false" style="-fx-background-color: red;" text=" &lt;&lt; Отменить" textFill="WHITE" />
+      <Text fill="WHITE" layoutX="184.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пополнение средств">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Text>
+      <TextField fx:id="moneyTextField" layoutX="207.0" layoutY="111.0" prefHeight="76.0" prefWidth="386.0" promptText="Сумма">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </TextField>
+      <Text layoutX="614.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$">
+         <font>
+            <Font size="55.0" />
+         </font>
+      </Text>
+      <Text fx:id="moneyValidationField" fill="RED" layoutX="306.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="187.20001220703125" />
+   </children>
+</AnchorPane>

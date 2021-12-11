@@ -17,27 +17,44 @@ import java.io.IOException;
 
 public class AccountController {
 
-  @FXML private Text Name;
+    @FXML
+    private Text Address;
 
-  @FXML private Text PassportNumber;
+    @FXML
+    private Text City;
 
-  @FXML private Text CompanyName;
+    @FXML
+    private Text CompanyName;
 
-  @FXML private Text Sphere;
+    @FXML
+    private Text Country;
 
-  @FXML private Text EmailAddr;
+    @FXML
+    private Button EditButton;
 
-  @FXML private Text Country;
+    @FXML
+    private Text EmailAddr;
 
-  @FXML private Text City;
+    @FXML
+    private Button ExitButton;
 
-  @FXML private Text Address;
+    @FXML
+    private Text Name;
 
-  @FXML private Button OrdersButton;
+    @FXML
+    private Button OrdersButton;
 
-  @FXML private Button EditButton;
+    @FXML
+    private Text PassportNumber;
 
-  @FXML private Button ExitButton;
+    @FXML
+    private Text Sphere;
+
+    @FXML
+    private Text moneyTextField;
+
+    @FXML
+    private Button topUpButton;
 
   @FXML
   void initialize() {
@@ -47,6 +64,7 @@ public class AccountController {
       SocketService.writeLine(gson.toJson(queryDTO));
       String answer = SocketService.readLine();
       JsonObject client = gson.fromJson(answer, JsonObject.class);
+      moneyTextField.setText(client.get("money").getAsString() + " $");
       Name.setText(client.get("name").getAsString() + " " + client.get("surname").getAsString());
       PassportNumber.setText(client.get("passportNumber").getAsString());
       EmailAddr.setText(client.get("emailAddr").getAsString());
@@ -56,7 +74,16 @@ public class AccountController {
       Country.setText(company.get("country").getAsString());
       Address.setText(company.get("address").getAsString());
       City.setText(company.get("city").getAsString());
-      EditButton.setOnAction(actionEvent -> {});
+
+      topUpButton.setOnAction(actionEvent -> {
+          try {
+              Parent root = FXMLLoader.load(getClass().getResource("../fxml/TopUp.fxml"));
+              StageConfig.stage.setScene(new Scene(root, 800, 450));
+          } catch (IOException e) {
+              e.printStackTrace();
+          }
+      });
+
 
       OrdersButton.setOnAction(
           actionEvent -> {
