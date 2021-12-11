@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
+@Deprecated
 public class MethodController {
 
   @FXML private TextField TargetTextField;
