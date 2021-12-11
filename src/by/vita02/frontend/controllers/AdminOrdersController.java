@@ -7,7 +7,6 @@ import by.vita02.frontend.stageConfig.StageConfig;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,45 +15,82 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
 
 public class AdminOrdersController {
 
-  @FXML
-  private Button ReportButton;
+  @FXML private Button AcceptButton;
 
   @FXML private Text AcceptValidationField;
 
-  @FXML private Button DemandChartButton;
+  @FXML private TextField firstNumberField;
 
-  @FXML private Button GraphicOfProfitButton;
-
-  @FXML private Button AcceptButton;
-
-  @FXML private Button ExitButton;
-
-  @FXML private TableView<Order> OrdersTable;
-
-  @FXML private TableColumn<Order, String> ProjectTypeColumn;
-
-  @FXML private TableColumn<Order, Integer> ProfitColumn;
-
-  @FXML private TableColumn<Order, String> StatusColumn;
-
-  @FXML private TableColumn<Order, String> CompanyNameColumn;
+  @FXML private TextField secondNumberField;
 
   @FXML private Button ClientsButton;
 
+  @FXML private Button DemandChartButton;
+
+  @FXML private Button ExitButton;
+
+  @FXML private Button GraphicOfProfitButton;
+
+  @FXML private TableView<Order> OrdersTable;
+
+  @FXML private Button ReportButton;
+
+  @FXML private TableColumn<Order, String> companyNameColumn;
+
+  @FXML private Button filterButton;
+
+  @FXML private Text firstNumberVaidationField;
+
+  @FXML private TableColumn<Order, String> payedColumn;
+
+  @FXML private TableColumn<Order, Integer> profitColumn;
+
+  @FXML private TableColumn<Order, String> projectTypeColumn;
+
+  @FXML private Button refreshButton;
+
+  @FXML private Text secondNumberValidationField;
+
+  @FXML private TableColumn<Order, String> statusColumn;
+
   @FXML
   void initialize() {
-    loadTable();
+    loadTable(-1, -1);
     Gson gson = new Gson();
+    refreshButton.setOnAction(
+        actionEvent -> {
+          loadTable(-1, -1);
+          firstNumberField.setText("");
+          secondNumberField.setText("");
+          firstNumberVaidationField.setText("");
+          secondNumberValidationField.setText("");
+        });
+    filterButton.setOnAction(
+        actionEvent -> {
+          if (!firstNumberField.getText().matches("\\d+")
+              || !secondNumberField.getText().matches("\\d+")) {
+            firstNumberVaidationField.setText("Ошибка");
+            secondNumberValidationField.setText("Ошибка");
+            return;
+          }
+          int firstNumber = Integer.parseInt(firstNumberField.getText());
+          int secondNumber = Integer.parseInt(secondNumberField.getText());
+          if (firstNumber >= secondNumber) {
+            firstNumberVaidationField.setText("Ошибка");
+            secondNumberValidationField.setText("Ошибка");
+            return;
+          }
+          loadTable(firstNumber, secondNumber);
+        });
     ExitButton.setOnAction(
         actionEvent -> {
           try {
@@ -82,7 +118,7 @@ public class AdminOrdersController {
             queryDTO1.setClientID(order.getId());
             SocketService.writeLine(gson.toJson(queryDTO1));
             SocketService.writeLine(orderObtained.toString());
-            loadTable();
+            loadTable(-1, -1);
           } catch (IOException e) {
             e.printStackTrace();
           }
@@ -96,36 +132,36 @@ public class AdminOrdersController {
             e.printStackTrace();
           }
         });
-    ClientsButton.setOnAction(actionEvent -> {
-      try {
-        Parent root = FXMLLoader.load(getClass().getResource("../fxml/Clients.fxml"));
-        StageConfig.stage.setScene(new Scene(root, 800,450));
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-
-    });
-    GraphicOfProfitButton.setOnAction(actionEvent -> {
-      try {
-        Parent root = FXMLLoader.load(getClass().getResource("../fxml/ProfitChart.fxml"));
-        StageConfig.stage.setScene(new Scene(root, 800, 450));
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-
-    });
-    ReportButton.setOnAction(actionEvent -> {
-      try {
-        Parent root = FXMLLoader.load(getClass().getResource("../fxml/Reports.fxml"));
-        StageConfig.stage.setScene(new Scene(root, 800, 450));
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-
-    });
+    ClientsButton.setOnAction(
+        actionEvent -> {
+          try {
+            Parent root = FXMLLoader.load(getClass().getResource("../fxml/Clients.fxml"));
+            StageConfig.stage.setScene(new Scene(root, 800, 450));
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
+    GraphicOfProfitButton.setOnAction(
+        actionEvent -> {
+          try {
+            Parent root = FXMLLoader.load(getClass().getResource("../fxml/ProfitChart.fxml"));
+            StageConfig.stage.setScene(new Scene(root, 800, 450));
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
+    ReportButton.setOnAction(
+        actionEvent -> {
+          try {
+            Parent root = FXMLLoader.load(getClass().getResource("../fxml/Reports.fxml"));
+            StageConfig.stage.setScene(new Scene(root, 800, 450));
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
   }
 
-  private void loadTable() {
+  private void loadTable(int min, int max) {
     QueryDTO queryDTO = new QueryDTO((long) -1, "getAllOrders");
     Gson gson = new Gson();
     try {
@@ -165,14 +201,25 @@ public class AdminOrdersController {
         if (orders.get(i).getAsJsonObject().get("isAccepted").getAsBoolean()) {
           orderObservableList.get(i).setStatus("Одобрен");
         } else orderObservableList.get(i).setStatus("Не одобрен");
-        ProjectTypeColumn.setCellValueFactory(
+        if (orders.get(i).getAsJsonObject().get("isPayed").getAsBoolean()) {
+          orderObservableList.get(i).setIsPayed("Оплачен");
+        } else orderObservableList.get(i).setIsPayed("Не оплачен");
+        projectTypeColumn.setCellValueFactory(
             new PropertyValueFactory<Order, String>("projectType"));
-        ProfitColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("cost"));
-        StatusColumn.setCellValueFactory(new PropertyValueFactory<Order, String>("status"));
-        CompanyNameColumn.setCellValueFactory(
+        profitColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("cost"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<Order, String>("status"));
+        companyNameColumn.setCellValueFactory(
             new PropertyValueFactory<Order, String>("companyName"));
-        OrdersTable.setItems(orderObservableList);
+        payedColumn.setCellValueFactory(new PropertyValueFactory<Order, String>("isPayed"));
       }
+        if (min != -1) {
+            orderObservableList =
+                    FXCollections.observableArrayList(
+                            orderObservableList.stream()
+                                    .filter(x -> x.getCost() < max && x.getCost() >= min)
+                                    .toList());
+        }
+        OrdersTable.setItems(orderObservableList);
     } catch (IOException e) {
       e.printStackTrace();
     }
