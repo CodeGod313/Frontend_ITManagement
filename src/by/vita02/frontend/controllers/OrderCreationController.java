@@ -49,6 +49,9 @@ public class OrderCreationController {
   @FXML private RadioButton visitCardRadio;
 
   @FXML
+  private Text totalPriceValidationField;
+
+  @FXML
   void initialize() {
     ToggleGroup toggleGroupRadio = new ToggleGroup();
     corpSiteRadio.setToggleGroup(toggleGroupRadio);
@@ -98,6 +101,11 @@ public class OrderCreationController {
           try {
             SocketService.writeLine(gson.toJson(queryDTO));
             JsonObject client = gson.fromJson(SocketService.readLine(), JsonObject.class);
+            Long money = client.get("money").getAsLong();
+            if(Long.parseLong(totalPriceString) > money){
+                totalPriceValidationField.setText("Недостаточно средств!");
+                return;
+            }
             order.addProperty(
                     "companyName", client.get("company").getAsJsonObject().get("name").getAsString());
             JsonArray jsonArray = client.get("orders").getAsJsonArray();
@@ -112,6 +120,15 @@ public class OrderCreationController {
           } catch (IOException e) {
             e.printStackTrace();
           }
+        });
+        cancelButton.setOnAction(actionEvent -> {
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("../fxml/Orders.fxml"));
+                StageConfig.stage.setScene(new Scene(root, 800, 450));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     quantityOfConventionalUnitsTextField.setOnAction(actionEvent -> {
         if(!quantityOfConventionalUnitsTextField.getText().matches("\\d+") || toggleGroupRadio.getSelectedToggle() == null){
