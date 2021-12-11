@@ -18,40 +18,46 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 
 public class OrdersController {
 
-  @FXML private Button AccountButton;
+  @FXML private Button accountButton;
 
-  @FXML private Button NewOrderButton;
+  @FXML private Button newOrderButton;
 
-  @FXML private Button ExitButton;
+  @FXML private Button exitButton;
 
   @FXML private TableView<Order> OrdersTable;
 
-  @FXML private TableColumn<Order, String> ProjectTypeColumn;
+  @FXML private TableColumn<Order, String> projectTypeColumn;
 
-  @FXML private TableColumn<Order, Integer> CostColumn;
+  @FXML private TableColumn<Order, Integer> costColumn;
 
-  @FXML private TableColumn<Order, Integer> NumberOfConventionalUnitsColumn;
+  @FXML private TableColumn<Order, Integer> numberOfConventionalUnitsColumn;
 
-  @FXML private TableColumn<Order, String> DateColumn;
+  @FXML private TableColumn<Order, String> dateColumn;
 
-  @FXML private TableColumn<Order, String> StatusColumn;
+  @FXML private TableColumn<Order, String> statusColumn;
+
+  @FXML private TableColumn<Order, String> payedColumn;
+  @FXML private Button payOrderButton;
+
+  @FXML private Text payValidationTextField;
 
   @FXML
   void initialize() {
     Gson gson = new Gson();
     QueryDTO queryDTO = new QueryDTO(LastQueryService.getUserId(), "findById");
     try {
-        SocketService.writeLine(gson.toJson(queryDTO));
+      SocketService.writeLine(gson.toJson(queryDTO));
       JsonObject client = gson.fromJson(SocketService.readLine(), JsonObject.class);
       JsonArray orders = client.get("orders").getAsJsonArray();
       ObservableList<Order> orderObservableList = FXCollections.observableArrayList();
       for (int i = 0; i < orders.size(); i++) {
-          orderObservableList.add(new Order());
+        orderObservableList.add(new Order());
         switch (orders
             .get(i)
             .getAsJsonObject()
@@ -59,48 +65,61 @@ public class OrdersController {
             .getAsJsonObject()
             .get("projectType")
             .getAsString()) {
-            case ("BUSINESS_CARD_SITE"):
-                orderObservableList.get(i).setProjectType("Сайт-визитка");
-                break;
-            case ("MOBILE_APP"):
-                orderObservableList.get(i).setProjectType("Мобильное приложение");
-                break;
-            case ("CORPORATE_SITE"):
-                orderObservableList.get(i).setProjectType("Корпоративный сайт");
-                break;
-            case ("ONLINE_SHOP"):
-                orderObservableList.get(i).setProjectType("Интернет-магазин");
-                break;
-            case ("SITE_CATALOG"):
-                orderObservableList.get(i).setProjectType("Сайт-каталог");
-                break;
+          case ("BUSINESS_CARD_SITE"):
+            orderObservableList.get(i).setProjectType("Сайт-визитка");
+            break;
+          case ("MOBILE_APP"):
+            orderObservableList.get(i).setProjectType("Мобильное приложение");
+            break;
+          case ("CORPORATE_SITE"):
+            orderObservableList.get(i).setProjectType("Корпоративный сайт");
+            break;
+          case ("ONLINE_SHOP"):
+            orderObservableList.get(i).setProjectType("Интернет-магазин");
+            break;
+          case ("SITE_CATALOG"):
+            orderObservableList.get(i).setProjectType("Сайт-каталог");
+            break;
         }
-          orderObservableList.get(i).setCost(orders.get(i).getAsJsonObject().get("cost").getAsInt());
-          orderObservableList.get(i).setNumOfConvUnits(orders.get(i).getAsJsonObject().get("count").getAsInt());
-          orderObservableList.get(i).setDate(orders.get(i).getAsJsonObject().get("date").getAsString());
-        if(orders.get(i).getAsJsonObject().get("isAccepted").getAsBoolean()){
-            orderObservableList.get(i).setStatus("Одобрен");
-        }else orderObservableList.get(i).setStatus("Не одобрен");
-        ProjectTypeColumn.setCellValueFactory(new PropertyValueFactory<Order, String>("projectType"));
-        CostColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("cost"));
-        NumberOfConventionalUnitsColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("numOfConvUnits"));
-        DateColumn.setCellValueFactory(new PropertyValueFactory<Order, String>("date"));
-        StatusColumn.setCellValueFactory(new PropertyValueFactory<Order, String>("status"));
+        orderObservableList.get(i).setCost(orders.get(i).getAsJsonObject().get("cost").getAsInt());
+        orderObservableList
+            .get(i)
+            .setNumOfConvUnits(orders.get(i).getAsJsonObject().get("count").getAsInt());
+        orderObservableList.get(i).setId(orders.get(i).getAsJsonObject().get("id").getAsLong());
+        orderObservableList
+            .get(i)
+            .setDate(orders.get(i).getAsJsonObject().get("date").getAsString());
+        if (orders.get(i).getAsJsonObject().get("isAccepted").getAsBoolean()) {
+          orderObservableList.get(i).setStatus("Одобрен");
+        } else orderObservableList.get(i).setStatus("Не одобрен");
+        if (orders.get(i).getAsJsonObject().get("isPayed").getAsBoolean()) {
+          orderObservableList.get(i).setIsPayed("Да");
+        } else orderObservableList.get(i).setIsPayed("Нет");
+        projectTypeColumn.setCellValueFactory(
+            new PropertyValueFactory<Order, String>("projectType"));
+        costColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("cost"));
+        numberOfConventionalUnitsColumn.setCellValueFactory(
+            new PropertyValueFactory<Order, Integer>("numOfConvUnits"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Order, String>("date"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<Order, String>("status"));
+        payedColumn.setCellValueFactory(new PropertyValueFactory<Order, String>("isPayed"));
         OrdersTable.setItems(orderObservableList);
       }
     } catch (IOException e) {
       e.printStackTrace();
     }
-    NewOrderButton.setOnAction(actionEvent -> {
-        try {
+
+    newOrderButton.setOnAction(
+        actionEvent -> {
+          try {
             Parent root = FXMLLoader.load(getClass().getResource("../fxml/OrderCreation.fxml"));
             StageConfig.stage.setScene(new Scene(root, 800, 450));
-        } catch (IOException e) {
+          } catch (IOException e) {
             e.printStackTrace();
-        }
-    });
+          }
+        });
 
-    ExitButton.setOnAction(
+    exitButton.setOnAction(
         actionEvent -> {
           LastQueryService.setUserId((long) -1);
           try {
@@ -110,12 +129,56 @@ public class OrdersController {
             e.printStackTrace();
           }
         });
-    AccountButton.setOnAction(
+    accountButton.setOnAction(
         actionEvent -> {
           Parent root = null;
           try {
             root = FXMLLoader.load(getClass().getResource("../fxml/Account.fxml"));
             StageConfig.stage.setScene(new Scene(root, 800, 450));
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
+
+    payOrderButton.setOnAction(
+        actionEvent -> {
+          Order order = OrdersTable.getSelectionModel().getSelectedItem();
+          if (order == null) {
+            payValidationTextField.setText("Выберите заказ, который хотите оплатить");
+            return;
+          } else payValidationTextField.setText("");
+          if (order.getStatus().equals("Не одобрен")) {
+            payValidationTextField.setText("Ещё не одобрен");
+            return;
+          } else payValidationTextField.setText("");
+          if (order.getIsPayed().equals("Да")) {
+            payValidationTextField.setText("Уже оплачен");
+            return;
+          } else payValidationTextField.setText("");
+          try {
+            SocketService.writeLine(gson.toJson(queryDTO));
+            JsonObject client = gson.fromJson(SocketService.readLine(), JsonObject.class);
+            Long money = client.get("money").getAsLong();
+            if (money >= order.getCost()) {
+              client.remove("money");
+              client.addProperty("money", money - order.getCost());
+              QueryDTO queryDTO1 = new QueryDTO(LastQueryService.getUserId(), "updateClient");
+              SocketService.writeLine(gson.toJson(queryDTO1));
+              SocketService.writeLine(client.toString());
+              QueryDTO queryDTO2 = new QueryDTO(order.getId(), "findOrderById");
+
+              SocketService.writeLine(gson.toJson(queryDTO2));
+              String ans = SocketService.readLine();
+              JsonObject orderObtained = gson.fromJson(ans, JsonObject.class);
+              orderObtained.remove("isPayed");
+              orderObtained.addProperty("isPayed", "true");
+              queryDTO1.setQuery("updateOrder");
+              queryDTO1.setClientID(order.getId());
+              SocketService.writeLine(gson.toJson(queryDTO1));
+              SocketService.writeLine(orderObtained.toString());
+              Parent root = FXMLLoader.load(getClass().getResource("../fxml/Orders.fxml"));
+              StageConfig.stage.setScene(new Scene(root, 800, 450));
+            } else payValidationTextField.setText("Недостаточно средств");
           } catch (IOException e) {
             e.printStackTrace();
           }

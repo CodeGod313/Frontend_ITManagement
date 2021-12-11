@@ -17,6 +17,15 @@ public class Order {
     private Integer cost;
     private Integer numOfConvUnits;
     private String companyName;
+    private String isPayed;
+
+    public String getIsPayed() {
+        return isPayed;
+    }
+
+    public void setIsPayed(String isPayed) {
+        this.isPayed = isPayed;
+    }
 
     public String getCompanyName() {
         return companyName;

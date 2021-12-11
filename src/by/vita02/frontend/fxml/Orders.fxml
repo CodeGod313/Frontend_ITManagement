@@ -7,8 +7,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.vita02.frontend.controllers.OrdersController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.vita02.frontend.controllers.OrdersController">
    <children>
       <ImageView fitHeight="450.0" fitWidth="800.0">
          <image>
@@ -17,19 +18,22 @@
       </ImageView>
       <ToolBar prefHeight="40.0" prefWidth="800.0">
          <items>
-            <Button fx:id="AccountButton" mnemonicParsing="false" style="-fx-background-color: blue;" text="Аккаунт" textFill="WHITE" />
-            <Button fx:id="NewOrderButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="666.0" style="-fx-background-color: white;" text="Сделать новый заказ" textAlignment="CENTER" textFill="BLUE" underline="true" />
-            <Button fx:id="ExitButton" alignment="CENTER_RIGHT" mnemonicParsing="false" style="-fx-background-color: blue;" text="Выйти" textFill="WHITE" />
+            <Button fx:id="accountButton" mnemonicParsing="false" style="-fx-background-color: blue;" text="Аккаунт" textFill="WHITE" />
+            <Button fx:id="newOrderButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="666.0" style="-fx-background-color: white;" text="Сделать новый заказ" textAlignment="CENTER" textFill="BLUE" underline="true" />
+            <Button fx:id="exitButton" alignment="CENTER_RIGHT" mnemonicParsing="false" style="-fx-background-color: blue;" text="Выйти" textFill="WHITE" />
          </items>
       </ToolBar>
-      <TableView fx:id="OrdersTable" layoutX="67.0" layoutY="54.0" prefHeight="381.0" prefWidth="666.0">
+      <TableView fx:id="OrdersTable" layoutX="11.0" layoutY="54.0" prefHeight="348.0" prefWidth="775.0">
         <columns>
-          <TableColumn fx:id="ProjectTypeColumn" prefWidth="203.19995880126953" text="Вид проекта" />
-          <TableColumn fx:id="CostColumn" prefWidth="67.20001220703125" text="Стоимость" />
-            <TableColumn fx:id="NumberOfConventionalUnitsColumn" prefWidth="93.60003662109375" text="Кол-во усл. ед." />
-            <TableColumn fx:id="DateColumn" maxWidth="200.00003051757812" prefWidth="200.00003051757812" text="Дата" />
-            <TableColumn fx:id="StatusColumn" prefWidth="96.7999267578125" text="Статус" />
+          <TableColumn fx:id="projectTypeColumn" prefWidth="203.19995880126953" text="Вид проекта" />
+          <TableColumn fx:id="costColumn" prefWidth="80.79998779296875" text="Стоимость" />
+            <TableColumn fx:id="numberOfConventionalUnitsColumn" prefWidth="99.2000732421875" text="Кол-во усл. ед." />
+            <TableColumn fx:id="dateColumn" maxWidth="200.00003051757812" prefWidth="183.99993896484375" text="Дата" />
+            <TableColumn fx:id="statusColumn" prefWidth="109.60003662109375" text="Статус" />
+            <TableColumn fx:id="payedColumn" prefWidth="95.199951171875" text="Оплачен" />
         </columns>
       </TableView>
+      <Button fx:id="payOrderButton" layoutX="346.0" layoutY="410.0" mnemonicParsing="false" style="-fx-background-color: green;" text="&lt;&lt; Оплатить &gt;&gt;" textFill="WHITE" />
+      <Text fx:id="payValidationTextField" fill="RED" layoutX="468.0" layoutY="427.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="157.33673095703125" />
    </children>
 </AnchorPane>
