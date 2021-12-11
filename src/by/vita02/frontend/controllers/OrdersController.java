@@ -93,7 +93,7 @@ public class OrdersController {
     }
     NewOrderButton.setOnAction(actionEvent -> {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("../fxml/rankMethodMatrix.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("../fxml/OrderCreation.fxml"));
             StageConfig.stage.setScene(new Scene(root, 800, 450));
         } catch (IOException e) {
             e.printStackTrace();
