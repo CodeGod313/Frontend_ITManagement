@@ -1,6 +1,8 @@
 package by.vita02.frontend.controllers;
 
 import by.vita02.frontend.POJOs.Order;
+import by.vita02.frontend.builder.OrderBuilder;
+import by.vita02.frontend.builder.impl.OrderBuilderImpl;
 import by.vita02.frontend.connection.SocketService;
 import by.vita02.frontend.dto.QueryDTO;
 import by.vita02.frontend.services.LastQueryService;
@@ -56,8 +58,9 @@ public class OrdersController {
       JsonObject client = gson.fromJson(SocketService.readLine(), JsonObject.class);
       JsonArray orders = client.get("orders").getAsJsonArray();
       ObservableList<Order> orderObservableList = FXCollections.observableArrayList();
+      OrderBuilder orderBuilder = new OrderBuilderImpl();
       for (int i = 0; i < orders.size(); i++) {
-        orderObservableList.add(new Order());
+        //orderObservableList.add(new Order());
         switch (orders
             .get(i)
             .getAsJsonObject()
@@ -66,35 +69,34 @@ public class OrdersController {
             .get("projectType")
             .getAsString()) {
           case ("BUSINESS_CARD_SITE"):
-            orderObservableList.get(i).setProjectType("Сайт-визитка");
+            orderBuilder.setProjectType("Сайт-визитка");
             break;
           case ("MOBILE_APP"):
-            orderObservableList.get(i).setProjectType("Мобильное приложение");
+            orderBuilder.setProjectType("Мобильное приложение");
             break;
           case ("CORPORATE_SITE"):
-            orderObservableList.get(i).setProjectType("Корпоративный сайт");
+            orderBuilder.setProjectType("Корпоративный сайт");
             break;
           case ("ONLINE_SHOP"):
-            orderObservableList.get(i).setProjectType("Интернет-магазин");
+            orderBuilder.setProjectType("Интернет-магазин");
             break;
           case ("SITE_CATALOG"):
-            orderObservableList.get(i).setProjectType("Сайт-каталог");
+            orderBuilder.setProjectType("Сайт-каталог");
             break;
         }
-        orderObservableList.get(i).setCost(orders.get(i).getAsJsonObject().get("cost").getAsInt());
-        orderObservableList
-            .get(i)
+        orderBuilder.setCost(orders.get(i).getAsJsonObject().get("cost").getAsInt());
+        orderBuilder
             .setNumOfConvUnits(orders.get(i).getAsJsonObject().get("count").getAsInt());
-        orderObservableList.get(i).setId(orders.get(i).getAsJsonObject().get("id").getAsLong());
-        orderObservableList
-            .get(i)
+        orderBuilder.setId(orders.get(i).getAsJsonObject().get("id").getAsLong());
+        orderBuilder
             .setDate(orders.get(i).getAsJsonObject().get("date").getAsString());
         if (orders.get(i).getAsJsonObject().get("isAccepted").getAsBoolean()) {
-          orderObservableList.get(i).setStatus("Одобрен");
-        } else orderObservableList.get(i).setStatus("Не одобрен");
+          orderBuilder.setStatus("Одобрен");
+        } else orderBuilder.setStatus("Не одобрен");
         if (orders.get(i).getAsJsonObject().get("isPayed").getAsBoolean()) {
-          orderObservableList.get(i).setIsPayed("Да");
-        } else orderObservableList.get(i).setIsPayed("Нет");
+          orderBuilder.setIsPayed("Да");
+        } else orderBuilder.setIsPayed("Нет");
+        orderObservableList.add(orderBuilder.build());
         projectTypeColumn.setCellValueFactory(
             new PropertyValueFactory<Order, String>("projectType"));
         costColumn.setCellValueFactory(new PropertyValueFactory<Order, Integer>("cost"));

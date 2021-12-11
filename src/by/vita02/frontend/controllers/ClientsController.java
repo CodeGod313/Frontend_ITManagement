@@ -3,6 +3,8 @@ package by.vita02.frontend.controllers;
 import by.vita02.frontend.POJOs.Client;
 import by.vita02.frontend.connection.SocketService;
 import by.vita02.frontend.dto.QueryDTO;
+import by.vita02.frontend.factory.ClientFactory;
+import by.vita02.frontend.factory.impl.ClientFactoryImpl;
 import by.vita02.frontend.stageConfig.StageConfig;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -75,6 +77,7 @@ public class ClientsController {
             JsonArray clients = gson.fromJson(SocketService.readLine(), JsonArray.class);
             ObservableList<Client> clientObservableList = FXCollections.observableArrayList();
             boolean status = true;
+            ClientFactory clientFactory = new ClientFactoryImpl();
             for (int i = 0; i < clients.size(); i++) {
               status = true;
               if (!SurnameTextField.getText().equals("")) {
@@ -100,13 +103,7 @@ public class ClientsController {
               }
               if (status) {
                 clientObservableList.add(
-                    new Client(
-                        clients.get(i).getAsJsonObject().get("id").getAsLong(),
-                        clients.get(i).getAsJsonObject().get("nickName").getAsString(),
-                        clients.get(i).getAsJsonObject().get("passportNumber").getAsString(),
-                        clients.get(i).getAsJsonObject().get("name").getAsString(),
-                        clients.get(i).getAsJsonObject().get("surname").getAsString(),
-                        clients.get(i).getAsJsonObject().get("emailAddr").getAsString()));
+                    clientFactory.createClientFromJsonObject(clients.get(i).getAsJsonObject()));
               }
             }
             ClientsTable.setItems(clientObservableList);

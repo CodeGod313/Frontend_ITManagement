@@ -1,77 +1,97 @@
 package by.vita02.frontend.POJOs;
 
 public class Order {
-    private Long id;
+  private Long id;
+  private String projectType;
+  private String date;
+  private String status;
+  private Integer cost;
+  private Integer numOfConvUnits;
+  private String companyName;
+  private String isPayed;
 
-    public Long getId() {
-        return id;
-    }
+  public Order() {}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public Order(
+      Long id,
+      String projectType,
+      String date,
+      String status,
+      Integer cost,
+      Integer numOfConvUnits,
+      String companyName,
+      String isPayed) {
+    this.id = id;
+    this.projectType = projectType;
+    this.date = date;
+    this.status = status;
+    this.cost = cost;
+    this.numOfConvUnits = numOfConvUnits;
+    this.companyName = companyName;
+    this.isPayed = isPayed;
+  }
 
-    private String projectType;
-    private String date;
-    private String status;
-    private Integer cost;
-    private Integer numOfConvUnits;
-    private String companyName;
-    private String isPayed;
+  public Long getId() {
+    return id;
+  }
 
-    public String getIsPayed() {
-        return isPayed;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public void setIsPayed(String isPayed) {
-        this.isPayed = isPayed;
-    }
+  public String getIsPayed() {
+    return isPayed;
+  }
 
-    public String getCompanyName() {
-        return companyName;
-    }
+  public void setIsPayed(String isPayed) {
+    this.isPayed = isPayed;
+  }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
+  public String getCompanyName() {
+    return companyName;
+  }
 
-    public String getProjectType() {
-        return projectType;
-    }
+  public void setCompanyName(String companyName) {
+    this.companyName = companyName;
+  }
 
-    public void setProjectType(String projectType) {
-        this.projectType = projectType;
-    }
+  public String getProjectType() {
+    return projectType;
+  }
 
-    public String getDate() {
-        return date;
-    }
+  public void setProjectType(String projectType) {
+    this.projectType = projectType;
+  }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
+  public String getDate() {
+    return date;
+  }
 
-    public String getStatus() {
-        return status;
-    }
+  public void setDate(String date) {
+    this.date = date;
+  }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+  public String getStatus() {
+    return status;
+  }
 
-    public Integer getCost() {
-        return cost;
-    }
+  public void setStatus(String status) {
+    this.status = status;
+  }
 
-    public void setCost(Integer cost) {
-        this.cost = cost;
-    }
+  public Integer getCost() {
+    return cost;
+  }
 
-    public Integer getNumOfConvUnits() {
-        return numOfConvUnits;
-    }
+  public void setCost(Integer cost) {
+    this.cost = cost;
+  }
 
-    public void setNumOfConvUnits(Integer numOfConvUnits) {
-        this.numOfConvUnits = numOfConvUnits;
-    }
+  public Integer getNumOfConvUnits() {
+    return numOfConvUnits;
+  }
+
+  public void setNumOfConvUnits(Integer numOfConvUnits) {
+    this.numOfConvUnits = numOfConvUnits;
+  }
 }
