@@ -150,7 +150,7 @@ public class EditClientController {
     if (NameTextField.getText().isEmpty()) {
       status = false;
       NameValidationField.setText("Введите имя");
-    } else if (Pattern.matches("[A-Z][a-z]*", NameTextField.getText())) {
+    } else if (Pattern.matches("[A-ZА-Я][a-zа-я]*", NameTextField.getText())) {
       client.addProperty("name", NameTextField.getText());
       NameValidationField.setText("");
     } else {
@@ -160,7 +160,7 @@ public class EditClientController {
     if (SurnameTextField.getText().isEmpty()) {
       status = false;
       SurnameValidationField.setText("Введите имя");
-    } else if (Pattern.matches("[A-Z][a-z]*", SurnameTextField.getText())) {
+    } else if (Pattern.matches("[A-ZА-Я][a-zа-я]*", SurnameTextField.getText())) {
       client.addProperty("surname", SurnameTextField.getText());
       SurnameValidationField.setText("");
     } else {

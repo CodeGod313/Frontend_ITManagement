@@ -11,10 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -22,34 +19,50 @@ import java.io.IOException;
 public class OrderCreationController {
 
   public static final String EMPTY_STRING = "";
-  @FXML private Text RadioValidationField;
+    @FXML
+    private Text RadioValidationField;
 
-  @FXML private Button cancelButton;
+    @FXML
+    private Button aboutOrdersButton;
 
-  @FXML private Button checkoutButton;
+    @FXML
+    private Button cancelButton;
 
-  @FXML private RadioButton corpSiteRadio;
+    @FXML
+    private CheckBox checkBox;
 
-  @FXML private RadioButton internetShopRadio;
+    @FXML
+    private Button checkoutButton;
 
-  @FXML private RadioButton mobileAppRadio;
+    @FXML
+    private RadioButton corpSiteRadio;
 
-  @FXML private TextField quantityOfConventionalUnitsTextField;
+    @FXML
+    private RadioButton internetShopRadio;
 
-  @FXML private Text quantityOfConventionalUnitsValidationField;
+    @FXML
+    private RadioButton mobileAppRadio;
 
-  @FXML private RadioButton siteCatalogRadio;
+    @FXML
+    private Text quantityOfConventionalUnitsValidationField;
 
-  @FXML private TextField targetTextField;
+    @FXML
+    private RadioButton siteCatalogRadio;
 
-  @FXML private Text targetValidationField;
+    @FXML
+    private TextField targetTextField;
 
-  @FXML private Text totalPriceField;
+    @FXML
+    private Text targetValidationField;
 
-  @FXML private RadioButton visitCardRadio;
+    @FXML
+    private Text totalPriceField;
 
-  @FXML
-  private Text totalPriceValidationField;
+    @FXML
+    private Text totalPriceValidationField;
+
+    @FXML
+    private RadioButton visitCardRadio;
 
   @FXML
   void initialize() {
@@ -59,13 +72,78 @@ public class OrderCreationController {
     mobileAppRadio.setToggleGroup(toggleGroupRadio);
     siteCatalogRadio.setToggleGroup(toggleGroupRadio);
     visitCardRadio.setToggleGroup(toggleGroupRadio);
+    corpSiteRadio.setOnAction(actionEvent -> {
+        if(checkBox.isSelected()){
+            totalPriceField.setText(200 * 1.5 +" $");
+        }else totalPriceField.setText(200 +" $");
+    });
+    internetShopRadio.setOnAction(actionEvent -> {
+          if(checkBox.isSelected()){
+              totalPriceField.setText(300 * 1.5 +" $");
+          }else totalPriceField.setText(300 +" $");
+      });
+    mobileAppRadio.setOnAction(actionEvent -> {
+          if(checkBox.isSelected()){
+              totalPriceField.setText(250 * 1.5 +" $");
+          }else totalPriceField.setText(250 +" $");
+      });
+    siteCatalogRadio.setOnAction(actionEvent -> {
+          if(checkBox.isSelected()){
+              totalPriceField.setText(80 * 1.5 +" $");
+          }else totalPriceField.setText(80 +" $");
+      });
+    visitCardRadio.setOnAction(actionEvent -> {
+          if(checkBox.isSelected()){
+              totalPriceField.setText(100 * 1.5 +" $");
+          }else totalPriceField.setText(100 +" $");
+      });
+    checkBox.setOnAction(actionEvent -> {
+        RadioButton selectedRadio = (RadioButton) toggleGroupRadio.getSelectedToggle();
+        if(selectedRadio == null){
+            totalPriceField.setText("0 $");
+            return;
+        }
+        String projectType = selectedRadio.getText();
+        if(checkBox.isSelected()){
+            String totalPriceString = totalPriceField.getText().substring(0, totalPriceField.getText().length() - 2);
+            Double totalPrice = Double.valueOf(totalPriceString);
+            totalPrice *= 1.5;
+            totalPriceField.setText(totalPrice + " $");
+        }else {
+            switch (projectType){
+                case "1 - Сайт-визитка 100$"-> {
+                    totalPriceField.setText("100 $");
+                }
+                case "2 - Мобильное приложение 250$"-> {
+                    totalPriceField.setText("250 $");
+                }
+                case "3 - Корпоративный сайт 200$"-> {
+                    totalPriceField.setText("200 $");
+                }
+                case "4 - Интернет-магазин 300$"->{
+                    totalPriceField.setText("300 $");
+                }
+                case "5 - Сайт-каталог 80$" ->{
+                    totalPriceField.setText("80 $");
+                }
+            }
+        }
+    });
+    aboutOrdersButton.setOnAction(actionEvent -> {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("../fxml/AboutOrders.fxml"));
+            StageConfig.stage.setScene(new Scene(root, 800, 450));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    });
     checkoutButton.setOnAction(
         actionEvent -> {
           if (!validation(toggleGroupRadio)) {
             return;
           }
           String totalPriceString = totalPriceField.getText().substring(0, totalPriceField.getText().length() - 2);
-          String count = quantityOfConventionalUnitsTextField.getText();
           String target = targetTextField.getText();
           JsonObject itProject = new JsonObject();
           String projectType = ((RadioButton) toggleGroupRadio.getSelectedToggle()).getText();
@@ -94,7 +172,7 @@ public class OrderCreationController {
           itProject.addProperty("nameOfConventionalUnit", "");
           JsonObject order = new JsonObject();
           order.addProperty("cost", totalPriceString);
-          order.addProperty("count", count);
+          order.addProperty("count", 1);
           order.add("itProject",itProject);
           QueryDTO queryDTO = new QueryDTO(LastQueryService.getUserId(), "findById");
           Gson gson = new Gson();
@@ -130,21 +208,6 @@ public class OrderCreationController {
                 e.printStackTrace();
             }
         });
-    quantityOfConventionalUnitsTextField.setOnAction(actionEvent -> {
-        if(!quantityOfConventionalUnitsTextField.getText().matches("\\d+") || toggleGroupRadio.getSelectedToggle() == null){
-            return;
-        }
-        String projectType = ((RadioButton) toggleGroupRadio.getSelectedToggle()).getText();
-        Long costOfConvUnit = 0L;
-        switch (projectType){
-            case "1 - Сайт-визитка 100$"-> costOfConvUnit = 100L;
-            case "2 - Мобильное приложение 250$"-> costOfConvUnit = 250L;
-            case "3 - Корпоративный сайт 200$"-> costOfConvUnit = 200L;
-            case "4 - Интернет-магазин 300$"-> costOfConvUnit = 300L;
-            case "5 - Сайт-каталог 80$" -> costOfConvUnit = 80L;
-        }
-        totalPriceField.setText(String.valueOf(costOfConvUnit * Long.parseLong(quantityOfConventionalUnitsTextField.getText())) + " $");
-    });
   }
 
   boolean validation(ToggleGroup group) {
@@ -155,13 +218,7 @@ public class OrderCreationController {
     } else {
       RadioValidationField.setText(EMPTY_STRING);
     }
-    if(!quantityOfConventionalUnitsTextField.getText().matches("\\d+")){
-      quantityOfConventionalUnitsValidationField.setText("Введите число");
-      result = false;
-    }else {
-      quantityOfConventionalUnitsValidationField.setText(EMPTY_STRING);
-    }
-    if(!targetTextField.getText().matches("[A-Z][a-z]+")){
+    if(!targetTextField.getText().matches("[A-ZА-Я][a-zа-я]+")){
       targetValidationField.setText("Введите цель");
       result = false;
     }else {
