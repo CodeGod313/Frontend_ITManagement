@@ -94,4 +94,35 @@ public class Order {
   public void setNumOfConvUnits(Integer numOfConvUnits) {
     this.numOfConvUnits = numOfConvUnits;
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Order order = (Order) o;
+
+    if (id != null ? !id.equals(order.id) : order.id != null) return false;
+    if (projectType != null ? !projectType.equals(order.projectType) : order.projectType != null) return false;
+    if (date != null ? !date.equals(order.date) : order.date != null) return false;
+    if (status != null ? !status.equals(order.status) : order.status != null) return false;
+    if (cost != null ? !cost.equals(order.cost) : order.cost != null) return false;
+    if (numOfConvUnits != null ? !numOfConvUnits.equals(order.numOfConvUnits) : order.numOfConvUnits != null)
+      return false;
+    if (companyName != null ? !companyName.equals(order.companyName) : order.companyName != null) return false;
+    return isPayed != null ? isPayed.equals(order.isPayed) : order.isPayed == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = id != null ? id.hashCode() : 0;
+    result = 31 * result + (projectType != null ? projectType.hashCode() : 0);
+    result = 31 * result + (date != null ? date.hashCode() : 0);
+    result = 31 * result + (status != null ? status.hashCode() : 0);
+    result = 31 * result + (cost != null ? cost.hashCode() : 0);
+    result = 31 * result + (numOfConvUnits != null ? numOfConvUnits.hashCode() : 0);
+    result = 31 * result + (companyName != null ? companyName.hashCode() : 0);
+    result = 31 * result + (isPayed != null ? isPayed.hashCode() : 0);
+    return result;
+  }
 }

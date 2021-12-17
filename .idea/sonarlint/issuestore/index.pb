@@ -1,6 +1,4 @@
 
-d
-4src/by/vita02/frontend/fxml/registrationCompany.fxml,5\b\5bad41a71b14878d79597a92ca7b4fe3c04d7242
 N
 .idea/libraries/gson_2_8_2.xml,8\c\8c2c22dc1008293ba683c6ee253b74ae9b07c11e
 G
@@ -27,8 +25,6 @@ Clib/javafx-sdk-17.0.1/legal/javafx.controls/ADDITIONAL_LICENSE_INFO,5\4\54059f
 0lib/javafx-sdk-17.0.1/legal/javafx.media/LICENSE,d\5\d52c8fc3edf53e53be3af87d2d1562e7f135e608
 p
 @lib/javafx-sdk-17.0.1/legal/javafx.media/ADDITIONAL_LICENSE_INFO,5\e\5e76c8cebcfda2d9ae357af38afd3c6917b45de8
-E
-JavaFxApplication.iml,b\5\b50aed6d72d1817768c74e69a70aec416de2a178
 _
 /lib/javafx-sdk-17.0.1/legal/javafx.fxml/LICENSE,8\3\8377551a1212cd1ccc9151ca7d31d70bc3378698
 k
@@ -69,31 +65,5 @@ e
 5lib/javafx-sdk-17.0.1/legal/javafx.graphics/mesa3d.md,5\a\5a34f31c8e7aeb9b1bcabce7d49ec9a18c0fd01d
 `
 0lib/javafx-sdk-17.0.1/legal/javafx.web/webkit.md,2\3\23008ebe5fa6b64d381be11344bcebc910a8279b
-a
-1src/by/vita02/frontend/fxml/rankMethodMatrix.fxml,f\4\f423724701eb9d11ca5dc16f506408f5994cc692
 [
 +lib/javafx-sdk-17.0.1/lib/javafx.properties,f\5\f50d68f4758824a43cfa1c9a5df3cd2d1d01a219
-e
-5src/by/vita02/frontend/services/LastQueryService.java,8\1\8106f72c2e1c6ddb54f0bcd6bbe7e54c637f45ce
-h
-8src/by/vita02/frontend/controllers/ResultController.java,8\3\83e44b70985ba3a0e3c0c2a9be2740f02ac3269e
-b
-2src/by/vita02/frontend/services/SignInService.java,f\f\ff10037e316b3d56c5f343e00a7318bf1f891eb9
-h
-8src/by/vita02/frontend/controllers/MethodController.java,a\d\ad87780d05dccd10b0378d9c68b2a81cd841e665
-n
->src/by/vita02/frontend/controllers/RegistrationController.java,b\3\b32ef5c36b3b8973b522f5745f415c56e1774128
-h
-8src/by/vita02/frontend/controllers/ReportController.java,a\d\ad056a9a2ff5ab66caf9aa7f47a4399a0a13e32b
-X
-(src/by/vita02/frontend/fxml/Account.fxml,1\f\1fd3e9ee369fbb831320b0f71ba761cee1921956
-V
-&src/by/vita02/frontend/fxml/TopUp.fxml,7\7\77349e33308bf82be2b048e5de4960076d51bce1
-g
-7src/by/vita02/frontend/controllers/TopUpController.java,3\0\3095eba5c92b021d8d51c363943c45d3ef6b89b0
-W
-'src/by/vita02/frontend/fxml/Orders.fxml,7\7\7782b2741263880f6883a9b18676525df3114929
-m
-=src/by/vita02/frontend/controllers/ProfitChartController.java,c\c\cc959ac47b4f0f370cd1e3307db7d2823a39fad0
-W
-'src/by/vita02/frontend/fxml/signIn.fxml,1\c\1cad5a885b83e1f451bfde8028350a1223c3e10f
